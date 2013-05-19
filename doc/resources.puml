@@ -1,0 +1,23 @@
+@startuml
+
+class Entity {
+/entity
+== Methods ==
+GET: list
+..
+{id} GET: info
+}
+
+class Event {
+/entity/{id}/event
+== Methods ==
+GET: list
+..
+{id} GET: data
+..
+POST: create
+}
+
+Entity "feed" *-- " *" Event
+
+@enduml

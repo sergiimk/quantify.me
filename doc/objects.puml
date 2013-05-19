@@ -1,0 +1,22 @@
+@startuml
+
+class User {
++ id
++ email
+}
+
+class Entity {
++ id
++ access list
+}
+
+class Event {
++ id
++ timestamp
++ data
+}
+
+User "*" -- "*" Entity
+Entity "feed" *-- "*" Event
+
+@enduml
