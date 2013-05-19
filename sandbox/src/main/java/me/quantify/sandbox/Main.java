@@ -19,7 +19,7 @@ public class Main {
 		logger.info("Starting server...");
 
 		URI uri = UriBuilder
-				.fromUri("http://localhost")
+				.fromUri("http://0.0.0.0")
 				.port(8080)
 				.build();
 
