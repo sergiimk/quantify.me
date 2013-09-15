@@ -1,0 +1,16 @@
+package measure
+
+import org.joda.time.DateTime
+
+///////////////////////////////////////////////////////////////////////////////
+
+object Measure {
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+class Measure(val id: Long,
+              val timestamp: DateTime,
+              val archtype: String,
+              val attributes: Map[String, String]) {
+}
