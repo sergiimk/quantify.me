@@ -67,6 +67,9 @@ app.controller('locController', function($scope, $http, $location) {
     $scope.refresh = function() {
         var host = $location.protocol() == 'file' ? '127.0.0.1' : $location.host();
         Quantify.getData($http, host).success(function(data) {
+            for(var i = 0; i != data.length; ++i) {
+                data[i].stay = data[i].duration / 3600 / 24;
+            }
             $scope.events = data;
         });
     }

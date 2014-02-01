@@ -16,6 +16,7 @@
             <th>City</th>
             <th>Country</th>
             <th>Transportation</th>
+            <th>Stay</th>
         </tr>
         <tr ng-repeat="event in events"
             ng-class-odd="'odd'"
@@ -24,6 +25,7 @@
             <td>{{event.city}}</td>
             <td>{{event.country}}</td>
             <td>{{event.transport}}</td>
+            <td>{{event.stay}} days</td>
         </tr>
     </table>
     <button ng-click="refresh()">Refresh</button>
