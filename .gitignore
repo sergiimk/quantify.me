@@ -1,9 +1,8 @@
+db/*
+
 # Artifacts
-*.class
-*.jar
-*.war
-*.ear
+*.pyc
+*.pyo
 
 # IntelliJ
 .idea
-*.iml
