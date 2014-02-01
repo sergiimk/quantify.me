@@ -1,7 +1,6 @@
 var app = angular.module('App', ['angularExtApp', 'googlechart']);
 
-app.controller('locController', function($scope, $http) {
-
+app.controller('locController', function($scope, $http, $location) {
     function aggregate(data, key_prop, value_prop) {
         var map = {};
         for(var i = 0; i != data.length; ++i) {
@@ -66,7 +65,8 @@ app.controller('locController', function($scope, $http) {
     };
 
     $scope.refresh = function() {
-        Quantify.getData($http).success(function(data) {
+        var host = $location.protocol() == 'file' ? '127.0.0.1' : $location.host();
+        Quantify.getData($http, host).success(function(data) {
             $scope.events = data;
         });
     }

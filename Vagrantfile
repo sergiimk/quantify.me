@@ -15,8 +15,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     node.vm.hostname = "quantify.me"
     node.vm.network :private_network, ip: '192.168.1.100'
 
-    node.vm.provision :shell, inline: "sed -i '/127.0.1.1/d' /etc/hosts"
-    node.vm.provision :hostmanager
+    #node.vm.provision :shell, inline: "sed -i '/127.0.1.1/d' /etc/hosts"
+    #node.vm.provision :hostmanager
   end
 
 end

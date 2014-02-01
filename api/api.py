@@ -8,7 +8,7 @@ import itertools
 
 
 app = Flask(__name__)
-db = TSDBFile.open('../res/db.json')
+db = TSDBFile.open('../db/db.json')
 
 
 def yield_json(events):
