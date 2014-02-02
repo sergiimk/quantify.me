@@ -45,6 +45,7 @@ def index():
 @app.route('/', methods=['POST'])
 @consumes('application/json')
 def write():
+    db.clear()
     for e in request.json:
         e['t'] = isodates.parse(e['t'])
         db.append(e)

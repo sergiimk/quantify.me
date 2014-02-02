@@ -1,6 +1,12 @@
 [
 {"t": "2009-11-25T00:00:00Z", "type": "location", "city": "Frankfurt am Main", "transport": "air", "country": "Germany"},
 {"t": "2009-11-29T00:00:00Z", "type": "location", "city": "Kiev", "transport": "air", "country": "Ukraine"},
+{"t": "2011-06-05T00:00:00Z", "type": "location", "city": "Simferopol", "transport": "train", "country": "Ukraine"},
+{"t": "2011-06-05T00:00:00Z", "type": "location", "city": "Bakhchisaray", "transport": "car", "country": "Ukraine"},
+{"t": "2011-06-09T00:00:00Z", "type": "location", "city": "Alupka", "transport": "car", "country": "Ukraine"},
+{"t": "2011-06-12T00:00:00Z", "type": "location", "city": "Alushta", "transport": "car", "country": "Ukraine"},
+{"t": "2011-06-15T00:00:00Z", "type": "location", "city": "Melitopol", "transport": "car", "country": "Ukraine"},
+{"t": "2011-06-16T00:00:00Z", "type": "location", "city": "Kiev", "transport": "car", "country": "Ukraine"},
 {"t": "2011-08-14T00:00:00Z", "type": "location", "city": "Cologne", "transport": "air", "country": "Germany"},
 {"t": "2011-08-18T00:00:00Z", "type": "location", "city": "Kiev", "transport": "air", "country": "Ukraine"},
 {"t": "2012-02-18T00:00:00Z", "type": "location", "city": "Beijing", "transport": "air", "country": "China"},

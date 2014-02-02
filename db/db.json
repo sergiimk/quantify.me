@@ -1,43 +1,49 @@
-{"country": "Germany", "ts": 1259107200000, "transport": "air", "city": "Frankfurt am Main", "type": "location"}
-{"country": "Ukraine", "ts": 1259452800000, "transport": "air", "city": "Kiev", "type": "location"}
-{"country": "Germany", "ts": 1313280000000, "transport": "air", "city": "Cologne", "type": "location"}
-{"country": "Ukraine", "ts": 1313625600000, "transport": "air", "city": "Kiev", "type": "location"}
-{"country": "China", "ts": 1329523200000, "transport": "air", "city": "Beijing", "type": "location"}
-{"country": "China", "ts": 1329523200000, "transport": "air", "city": "Shenzhen", "type": "location"}
-{"country": "China", "ts": 1330128000000, "transport": "air", "city": "Beijing", "type": "location"}
-{"country": "Ukraine", "ts": 1330128000000, "transport": "air", "city": "Kiev", "type": "location"}
-{"country": "Germany", "ts": 1330732800000, "transport": "air", "city": "Cologne", "type": "location"}
-{"country": "France", "ts": 1330732800000, "transport": "train", "city": "Paris", "type": "location"}
-{"country": "France", "ts": 1330905600000, "transport": "air", "city": "Nice", "type": "location"}
-{"country": "Germany", "ts": 1331424000000, "transport": "air", "city": "Frankfurt am Main", "type": "location"}
-{"country": "Ukraine", "ts": 1331424000000, "transport": "air", "city": "Kiev", "type": "location"}
-{"country": "Russia", "ts": 1337299200000, "transport": "air", "city": "Moscow", "type": "location"}
-{"country": "Ukraine", "ts": 1337472000000, "transport": "air", "city": "Kiev", "type": "location"}
-{"country": "Germany", "ts": 1364169600000, "transport": "air", "city": "Frankfurt am Main", "type": "location"}
-{"country": "United States", "ts": 1364169600000, "transport": "air", "city": "Washington", "type": "location"}
-{"country": "United States", "ts": 1364169600000, "transport": "air", "city": "San Francisco", "type": "location"}
-{"country": "Germany", "ts": 1364688000000, "transport": "air", "city": "Frankfurt am Main", "type": "location"}
-{"country": "Ukraine", "ts": 1364688000000, "transport": "air", "city": "Kiev", "type": "location"}
-{"country": "Germany", "ts": 1367452800000, "transport": "air", "city": "Memmingen", "type": "location"}
-{"country": "Switzerland", "ts": 1367452800000, "transport": "train", "city": "Zurich", "type": "location"}
-{"country": "Switzerland", "ts": 1367625600000, "transport": "train", "city": "Interlaken", "type": "location"}
-{"country": "Switzerland", "ts": 1367884800000, "transport": "train", "city": "Geneva", "type": "location"}
-{"country": "Italy", "ts": 1368144000000, "transport": "train", "city": "Milano", "type": "location"}
-{"country": "Ukraine", "ts": 1368144000000, "transport": "air", "city": "Kiev", "type": "location"}
-{"country": "Russia", "ts": 1371859200000, "transport": "air", "city": "Moscow", "type": "location"}
-{"country": "South Korea", "ts": 1371945600000, "transport": "air", "city": "Seoul", "type": "location"}
-{"country": "Russia", "ts": 1373068800000, "transport": "air", "city": "Moscow", "type": "location"}
-{"country": "Ukraine", "ts": 1373068800000, "transport": "air", "city": "Kiev", "type": "location"}
-{"country": "Czech Republic", "ts": 1374364800000, "transport": "air", "city": "Prague", "type": "location"}
-{"country": "South Korea", "ts": 1374451200000, "transport": "air", "city": "Seoul", "type": "location"}
-{"country": "Russia", "ts": 1375660800000, "transport": "air", "city": "Moscow", "type": "location"}
-{"country": "Ukraine", "ts": 1375660800000, "transport": "air", "city": "Kiev", "type": "location"}
-{"country": "Netherlands", "ts": 1380153600000, "transport": "air", "city": "Amsterdam", "type": "location"}
-{"country": "Ireland", "ts": 1380153600000, "transport": "air", "city": "Dublin", "type": "location"}
-{"country": "Netherlands", "ts": 1380326400000, "transport": "air", "city": "Amsterdam", "type": "location"}
-{"country": "Ukraine", "ts": 1380326400000, "transport": "air", "city": "Kiev", "type": "location"}
-{"country": "Ukraine", "ts": 1385683200000, "transport": "car", "city": "Kharkiv", "type": "location"}
-{"country": "Ukraine", "ts": 1388880000000, "transport": "train", "city": "Melitopol", "type": "location"}
-{"country": "Ukraine", "ts": 1389139200000, "transport": "train", "city": "Kharkiv", "type": "location"}
-{"country": "Ukraine", "ts": 1389830400000, "transport": "train", "city": "Kiev", "type": "location"}
-{"country": "Ukraine", "ts": 1389916800000, "transport": "train", "city": "Kharkiv", "type": "location"}
+{"transport": "air", "ts": 1259107200000, "type": "location", "city": "Frankfurt am Main", "country": "Germany"}
+{"transport": "air", "ts": 1259452800000, "type": "location", "city": "Kiev", "country": "Ukraine"}
+{"transport": "train", "ts": 1307232000000, "type": "location", "city": "Simferopol", "country": "Ukraine"}
+{"transport": "car", "ts": 1307232000000, "type": "location", "city": "Bakhchisaray", "country": "Ukraine"}
+{"transport": "car", "ts": 1307577600000, "type": "location", "city": "Alupka", "country": "Ukraine"}
+{"transport": "car", "ts": 1307836800000, "type": "location", "city": "Alushta", "country": "Ukraine"}
+{"transport": "car", "ts": 1308096000000, "type": "location", "city": "Melitopol", "country": "Ukraine"}
+{"transport": "car", "ts": 1308182400000, "type": "location", "city": "Kiev", "country": "Ukraine"}
+{"transport": "air", "ts": 1313280000000, "type": "location", "city": "Cologne", "country": "Germany"}
+{"transport": "air", "ts": 1313625600000, "type": "location", "city": "Kiev", "country": "Ukraine"}
+{"transport": "air", "ts": 1329523200000, "type": "location", "city": "Beijing", "country": "China"}
+{"transport": "air", "ts": 1329523200000, "type": "location", "city": "Shenzhen", "country": "China"}
+{"transport": "air", "ts": 1330128000000, "type": "location", "city": "Beijing", "country": "China"}
+{"transport": "air", "ts": 1330128000000, "type": "location", "city": "Kiev", "country": "Ukraine"}
+{"transport": "air", "ts": 1330732800000, "type": "location", "city": "Cologne", "country": "Germany"}
+{"transport": "train", "ts": 1330732800000, "type": "location", "city": "Paris", "country": "France"}
+{"transport": "air", "ts": 1330905600000, "type": "location", "city": "Nice", "country": "France"}
+{"transport": "air", "ts": 1331424000000, "type": "location", "city": "Frankfurt am Main", "country": "Germany"}
+{"transport": "air", "ts": 1331424000000, "type": "location", "city": "Kiev", "country": "Ukraine"}
+{"transport": "air", "ts": 1337299200000, "type": "location", "city": "Moscow", "country": "Russia"}
+{"transport": "air", "ts": 1337472000000, "type": "location", "city": "Kiev", "country": "Ukraine"}
+{"transport": "air", "ts": 1364169600000, "type": "location", "city": "Frankfurt am Main", "country": "Germany"}
+{"transport": "air", "ts": 1364169600000, "type": "location", "city": "Washington", "country": "United States"}
+{"transport": "air", "ts": 1364169600000, "type": "location", "city": "San Francisco", "country": "United States"}
+{"transport": "air", "ts": 1364688000000, "type": "location", "city": "Frankfurt am Main", "country": "Germany"}
+{"transport": "air", "ts": 1364688000000, "type": "location", "city": "Kiev", "country": "Ukraine"}
+{"transport": "air", "ts": 1367452800000, "type": "location", "city": "Memmingen", "country": "Germany"}
+{"transport": "train", "ts": 1367452800000, "type": "location", "city": "Zurich", "country": "Switzerland"}
+{"transport": "train", "ts": 1367625600000, "type": "location", "city": "Interlaken", "country": "Switzerland"}
+{"transport": "train", "ts": 1367884800000, "type": "location", "city": "Geneva", "country": "Switzerland"}
+{"transport": "train", "ts": 1368144000000, "type": "location", "city": "Milano", "country": "Italy"}
+{"transport": "air", "ts": 1368144000000, "type": "location", "city": "Kiev", "country": "Ukraine"}
+{"transport": "air", "ts": 1371859200000, "type": "location", "city": "Moscow", "country": "Russia"}
+{"transport": "air", "ts": 1371945600000, "type": "location", "city": "Seoul", "country": "South Korea"}
+{"transport": "air", "ts": 1373068800000, "type": "location", "city": "Moscow", "country": "Russia"}
+{"transport": "air", "ts": 1373068800000, "type": "location", "city": "Kiev", "country": "Ukraine"}
+{"transport": "air", "ts": 1374364800000, "type": "location", "city": "Prague", "country": "Czech Republic"}
+{"transport": "air", "ts": 1374451200000, "type": "location", "city": "Seoul", "country": "South Korea"}
+{"transport": "air", "ts": 1375660800000, "type": "location", "city": "Moscow", "country": "Russia"}
+{"transport": "air", "ts": 1375660800000, "type": "location", "city": "Kiev", "country": "Ukraine"}
+{"transport": "air", "ts": 1380153600000, "type": "location", "city": "Amsterdam", "country": "Netherlands"}
+{"transport": "air", "ts": 1380153600000, "type": "location", "city": "Dublin", "country": "Ireland"}
+{"transport": "air", "ts": 1380326400000, "type": "location", "city": "Amsterdam", "country": "Netherlands"}
+{"transport": "air", "ts": 1380326400000, "type": "location", "city": "Kiev", "country": "Ukraine"}
+{"transport": "car", "ts": 1385683200000, "type": "location", "city": "Kharkiv", "country": "Ukraine"}
+{"transport": "train", "ts": 1388880000000, "type": "location", "city": "Melitopol", "country": "Ukraine"}
+{"transport": "train", "ts": 1389139200000, "type": "location", "city": "Kharkiv", "country": "Ukraine"}
+{"transport": "train", "ts": 1389830400000, "type": "location", "city": "Kiev", "country": "Ukraine"}
+{"transport": "train", "ts": 1389916800000, "type": "location", "city": "Kharkiv", "country": "Ukraine"}
