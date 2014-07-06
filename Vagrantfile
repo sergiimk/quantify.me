@@ -17,6 +17,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     #node.vm.provision :shell, inline: "sed -i '/127.0.1.1/d' /etc/hosts"
     #node.vm.provision :hostmanager
+
+    config.vm.synced_folder ".", "/quantify"
   end
 
 end
