@@ -1,6 +1,15 @@
 import calendar
 from datetime import datetime
 import dateutil.parser
+from dateutil.tz import tzutc, tzlocal
+
+
+def utcnow():
+    return datetime.utcnow().replace(tzinfo=tzutc())
+
+
+def localnow():
+    return datetime.now().replace(tzinfo=tzlocal())
 
 
 def format(dt):

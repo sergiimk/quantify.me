@@ -1,0 +1,9 @@
+<a style="float: right" href="#/register">Sign Up</a>
+
+<form ng-controller="registerController" ng-submit="register()">
+    <label for="email">Email:</label><br/>
+    <input type="text" id="email" ng-model="account.email"><br/>
+    <label for="password">Password:</label><br/>
+    <input type="password" id="password" ng-model="account.password"><br/>
+    <button type="submit">Create Account</button><br/>
+</form>

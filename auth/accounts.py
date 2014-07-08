@@ -1,6 +1,7 @@
 from flask import Flask, request, Response, jsonify
-import http.client
 from flask_sqlite import SQLite3
+from flask_cors import cross_origin
+import http.client
 import tokens
 
 
@@ -15,6 +16,7 @@ def init_db(conn):
 
 
 @app.route('/tokens', methods=['POST'])
+@cross_origin(headers=['Content-Type'])
 def authorize():
     grant_type = request.json['grant_type']
     if grant_type != 'password':
@@ -47,6 +49,7 @@ def authorize():
 
 
 @app.route('/accounts', methods=['POST'])
+@cross_origin(headers=['Content-Type'])
 def register():
     email = request.json['email']
     password = request.json['password']
@@ -77,9 +80,9 @@ def get_all():
 
 if __name__ == '__main__':
     import sqlite3
-    cs = 'file:memdb1?mode=memory&cache=shared'
+    cs = 'file:auth?mode=memory&cache=shared'
     memdb = sqlite3.connect(cs)
     init_db(memdb)
 
     app.config.setdefault('DATABASE', cs)
-    app.run('0.0.0.0', 8081, debug=True, threaded=False)
+    app.run('0.0.0.0', 8080, debug=True)

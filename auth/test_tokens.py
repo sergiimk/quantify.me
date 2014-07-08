@@ -1,9 +1,9 @@
 import http.client
 from unittest.mock import ANY
-from test_client import AccountsTestCase
+from test_base import AuthTestCase
 
 
-class TestTokensPassword(AccountsTestCase):
+class TestTokensPassword(AuthTestCase):
 
     def test_success(self):
         resp = self.client.post('/accounts', data={

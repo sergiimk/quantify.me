@@ -1,8 +1,8 @@
 import http.client
-from test_client import AccountsTestCase
+from test_base import AuthTestCase
 
 
-class TestCreateAccount(AccountsTestCase):
+class TestCreateAccount(AuthTestCase):
 
     def test_get_all_empty_db(self):
         resp = self.client.get('/accounts')

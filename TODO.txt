@@ -1,0 +1,15 @@
+Implement Web login
+Implement Web register
+Port location view
+
+setup project tests
+Error handling
+Request schema validation
+
+Dockerize Auths
+Dockerize Web with nginx
+Dockerize Sandbox
+
+Use nginx + uWSGI in app containers
+Deploy to AWS
+Get domain

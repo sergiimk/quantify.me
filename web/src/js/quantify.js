@@ -11,7 +11,7 @@ function Quantify($http, config)
 
         return $http({
             url: url,
-            method: "POST",
+            method: 'POST',
             data: JSON.stringify(request),
             headers: {'Content-Type': 'application/json'},
         });
@@ -28,7 +28,7 @@ function Quantify($http, config)
 
         return $http({
             url: url,
-            method: "POST",
+            method: 'POST',
             data: JSON.stringify(request),
             headers: {'Content-Type': 'application/json'},
         });
