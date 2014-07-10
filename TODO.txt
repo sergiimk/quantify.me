@@ -1,12 +1,12 @@
-Implement Web login
-Implement Web register
+Implement import/export data
 Port location view
 
+Implement web API layer
 setup project tests
 Error handling
 Request schema validation
 
-Dockerize Auths
+Dockerize Auth
 Dockerize Web with nginx
 Dockerize Sandbox
 

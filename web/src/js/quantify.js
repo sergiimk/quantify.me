@@ -1,6 +1,6 @@
 function Quantify($http, config)
 {
-    this.createAccount = function (email, password) {
+    this.createAccount = function(email, password) {
         var url = config.auth_base_url + "/accounts";
 
         var request = {
@@ -17,8 +17,8 @@ function Quantify($http, config)
         });
     };
 
-    this.loginAccount = function (email, password) {
-        var url = config.auth_base_url + "/tokens";
+    this.loginAccount = function(email, password) {
+        var url = config.auth_base_url + '/tokens';
 
         var request = {
             grant_type: 'password',
@@ -31,6 +31,28 @@ function Quantify($http, config)
             method: 'POST',
             data: JSON.stringify(request),
             headers: {'Content-Type': 'application/json'},
+        });
+    };
+
+    this.importData = function(account_id, access_token, file) {
+        var url = config.data_base_url + '/sensors/' + account_id + '/file';
+
+        return $http.post(url, file,
+        {
+            headers: {'Content-Type': 'multipart/form-data'},
+        });
+    };
+
+    this.getExportDataURL = function(account_id, access_token) {
+        return config.data_base_url + '/sensors/' + account_id + '/file';
+    };
+
+    this.deleteData = function(account_id, access_token) {
+        var url = config.data_base_url + '/sensors/' + account_id;
+
+        return $http({
+            url: url,
+            method: 'DELETE',
         });
     };
 

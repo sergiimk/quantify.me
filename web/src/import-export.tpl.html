@@ -1,0 +1,11 @@
+<div ng-controller="accountController">
+    <a ng-href="{{exportDataUrl}}">Export Data</a><br/>
+
+    <button ng-click="deleteData()">Clear Data</button><br/>
+
+    <h3>Import Data</h3>
+    <form>
+    <input type="file" ng-model="importDataFile"/><br/>
+    <button ng-click="importData()">Import Data</button>
+    </form>
+</div>

@@ -1,11 +1,15 @@
-from flask import Flask, request, Response, jsonify, json
+from flask import Flask, request, Response, json
 from flask_sqlite import SQLite3
+from flask_cors import cross_origin
 import http.client
 import iso8601
 
 
 app = Flask(__name__)
 db = SQLite3(app)
+
+#TODO: separate web API layer, remove CORS
+#TODO: fix CORS method composition
 
 
 def init_db(conn):
@@ -15,6 +19,7 @@ def init_db(conn):
 
 
 @app.route('/sensors/<int:sensor_id>', methods=['GET'])
+@cross_origin(headers='Content-Type', methods=['HEAD', 'GET', 'PUT', 'POST', 'DELETE'])
 def get_data(sensor_id):
     with db.connection as tr:
         cur = tr.cursor()
@@ -24,10 +29,21 @@ def get_data(sensor_id):
         data = list(map(lambda r: json.loads(r[0]),
                         cur.fetchall()))
 
-        return jsonify(data=data)
+        return Response(json.dumps(data),
+                        mimetype='application/json')
+
+
+@app.route('/sensors/<int:sensor_id>/file', methods=['GET'])
+@cross_origin(headers='Content-Type')
+def get_data_file(sensor_id):
+    response = get_data(sensor_id)
+    response.headers['Content-Disposition'] = \
+        'attachment; filename=sensor_{}.json'.format(sensor_id)
+    return response
 
 
 @app.route('/sensors/<int:sensor_id>', methods=['PUT', 'POST'])
+@cross_origin(headers='Content-Type', methods=['HEAD', 'GET', 'PUT', 'POST', 'DELETE'])
 def set_data(sensor_id):
     with db.connection as tr:
         if request.method == 'PUT':
@@ -43,6 +59,22 @@ def set_data(sensor_id):
                 'VALUES(?, ?, ?)', (sensor_id, ts, data))
 
         return Response(status=http.client.CREATED)
+
+
+@app.route('/sensors/<int:sensor_id>/file', methods=['POST'])
+@cross_origin(headers='Content-Type')
+def set_data_file(sensor_id):
+    print(request.files)
+    return Response(status=http.client.CREATED)
+
+
+@app.route('/sensors/<int:sensor_id>', methods=['DELETE'])
+@cross_origin(headers='Content-Type', methods=['HEAD', 'GET', 'PUT', 'POST', 'DELETE'])
+def delete_data(sensor_id):
+    with db.connection as tr:
+        tr.execute('DELETE FROM events '
+                   'WHERE sensor_id=?', (sensor_id,))
+    return Response(status=http.client.OK)
 
 
 if __name__ == '__main__':
