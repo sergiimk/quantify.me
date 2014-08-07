@@ -1,5 +1,4 @@
 import http.client
-from unittest.mock import ANY
 from test_base import TsdbApiTestCase
 import iso8601
 
