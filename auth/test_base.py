@@ -1,21 +1,19 @@
 import unittest
-import sqlite3
 from test_client import TestClient
-import accounts
+from accounts import app
+from models import db
 
 
 class AuthTestCase(unittest.TestCase):
 
     def setUp(self):
-        cs = 'file:db?mode=memory&cache=shared'
-        self._db = sqlite3.connect(cs)
-        accounts.init_db(self._db)
+        app.config['TESTING'] = True
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://'
+        app.config['SQLALCHEMY_ECHO'] = True
 
-        accounts.app.config['DATABASE'] = cs
-        accounts.app.config['TESTING'] = True
+        db.init_app(app)
+        db.app = app
+        db.create_all()
 
-        accounts.app.test_client_class = TestClient
-        self.client = accounts.app.test_client()
-
-    def tearDown(self):
-        self._db.close()
+        app.test_client_class = TestClient
+        self.client = app.test_client()

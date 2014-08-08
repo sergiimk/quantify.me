@@ -24,6 +24,5 @@ class TestCreateAccount(AuthTestCase):
             'accounts': [{
                 'account_id': 1,
                 'email': 'test@example.com',
-                'password': 'swordfish',
             }],
         })

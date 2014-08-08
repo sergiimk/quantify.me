@@ -1,5 +1,7 @@
+python-dateutil
+sqlalchemy
 flask
 flask-cors
-python-dateutil
+flask-sqlalchemy
 
 nose
