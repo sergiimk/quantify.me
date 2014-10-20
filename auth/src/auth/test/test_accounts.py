@@ -1,5 +1,5 @@
 import http.client
-from test_base import AuthTestCase
+from auth.test.test_base import AuthTestCase
 
 
 class TestCreateAccount(AuthTestCase):

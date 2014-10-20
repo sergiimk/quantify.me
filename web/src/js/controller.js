@@ -5,7 +5,7 @@ angular.module('app', ['ngRoute'])
 ///////////////////////////////////////////////////////////
 
 .constant('config', {
-    auth_base_url: 'http://localhost:8080',
+    auth_base_url: 'http://boot2docker:8080',
     client_secret: 'web',
     data_base_url: 'http://localhost:8081',
 })
@@ -65,9 +65,15 @@ angular.module('app', ['ngRoute'])
     $scope.account = {
         email: '',
         password: '',
+        password2: '',
     };
 
     $scope.register = function() {
+        if($scope.account.password != $scope.account.password2) {
+            alert("Passwords do not match");
+            return;
+        }
+
         quantify.createAccount(
             $scope.account.email,
             $scope.account.password

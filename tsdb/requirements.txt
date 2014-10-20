@@ -1,0 +1,7 @@
+python-dateutil
+sqlalchemy
+flask
+flask-cors
+flask-sqlalchemy
+
+nose

@@ -1,9 +1,9 @@
 from flask import Flask, request, Response, jsonify
 from flask_cors import cross_origin
 import http.client
-import tokens
-import models
-from models import db
+from auth import tokens
+from auth import models
+from auth.models import db
 from sqlalchemy.exc import IntegrityError
 
 

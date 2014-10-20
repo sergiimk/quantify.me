@@ -1,6 +1,6 @@
 import http.client
-from test_base import TsdbApiTestCase
-import iso8601
+from tsdb.test.test_base import TsdbApiTestCase
+from utils import iso8601
 
 
 class TestTSDB(TsdbApiTestCase):

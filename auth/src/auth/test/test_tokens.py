@@ -1,6 +1,6 @@
 import http.client
 from unittest.mock import ANY
-from test_base import AuthTestCase
+from auth.test.test_base import AuthTestCase
 
 
 class TestTokensPassword(AuthTestCase):

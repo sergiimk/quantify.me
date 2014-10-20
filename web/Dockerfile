@@ -7,5 +7,5 @@ ADD nginx.conf /etc/nginx/nginx.conf
 ADD src /quantify/web
 
 EXPOSE 80
-WORKDIR /quantify/api
+WORKDIR /quantify
 CMD nginx

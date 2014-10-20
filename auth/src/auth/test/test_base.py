@@ -1,7 +1,7 @@
 import unittest
-from test_client import TestClient
-from accounts import app
-from models import db
+from utils.test_client import TestClient
+from auth.accounts import app
+from auth.models import db
 
 
 class AuthTestCase(unittest.TestCase):

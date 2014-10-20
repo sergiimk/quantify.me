@@ -1,7 +1,7 @@
 import unittest
 import sqlite3
-from test_client import TestClient
-import tsdbapi
+from utils.test_client import TestClient
+from tsdb import tsdbapi
 
 
 class TsdbApiTestCase(unittest.TestCase):
