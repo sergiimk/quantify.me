@@ -1,4 +1,4 @@
-angular.module('app', ['ngRoute'])
+angular.module('app', ['ngRoute', 'ui.bootstrap', 'angularFileUpload'])
 
 ///////////////////////////////////////////////////////////
 // Config
@@ -7,13 +7,13 @@ angular.module('app', ['ngRoute'])
 .constant('config', {
     auth_base_url: 'http://boot2docker:8080',
     client_secret: 'web',
-    data_base_url: 'http://localhost:8081',
+    data_base_url: 'http://boot2docker:8081',
 })
 
 .service('quantify', Quantify)
 
 .service('state', function() {
-    this.account_id = 1;
+    this.account_id = null;
     this.access_token = null;
 })
 
@@ -40,6 +40,10 @@ angular.module('app', ['ngRoute'])
 ///////////////////////////////////////////////////////////
 
 .controller('loginController', function($scope, $location, state, quantify) {
+    if(state.access_token != null) {
+        $location.path('/dashboard');
+    }
+
     $scope.credentials = {
         email: '',
         password: '',
@@ -50,6 +54,8 @@ angular.module('app', ['ngRoute'])
             $scope.credentials.email,
             $scope.credentials.password
         ).success(function (data, status, headers, config) {
+            state.account_id = data.account_id;
+            state.access_token = data.access_token;
             $location.path('/dashboard');
         }).error(function (data, status, headers, config) {
             alert("Failed to login:\n[" + status + "] " + data);
@@ -86,23 +92,41 @@ angular.module('app', ['ngRoute'])
 })
 
 ///////////////////////////////////////////////////////////
+// Dashboard
+///////////////////////////////////////////////////////////
+
+.controller('dashboardController', function($scope, $location, state, quantify) {
+    $scope.data = null;
+
+    $scope.getData = function() {
+        quantify.getData(
+            state.account_id,
+            state.access_token
+        ).success(function (data, status, headers, config) {
+            $scope.data = data;
+        }).error(function (data, status, headers, config) {
+            alert("Failed to load sensor data:\n[" + status + "] " + data);
+        });
+    };
+})
+
+///////////////////////////////////////////////////////////
 // Account
 ///////////////////////////////////////////////////////////
 
-.controller('accountController', function($scope, $location, state, quantify) {
+.controller('accountController', function($scope, $location, state, quantify, FileUploader) {
     $scope.exportDataUrl = quantify.getExportDataURL(state.account_id, state.access_token);
-    $scope.importDataFile = null;
 
-    $scope.importData = function() {
-        quantify.importData(
-            state.account_id,
-            state.access_token,
-            $scope.importDataFile
-        ).success(function (data, status, headers, config) {
-            alert('Data uploaded successfully.')
-        }).error(function (data, status, headers, config) {
-            alert("Failed to upload data:\n[" + status + "] " + data);
-        });
+    $scope.uploader = new FileUploader({
+        url: quantify.getImportDataURL(state.account_id, state.access_token),
+    });
+
+    $scope.uploader.onCompleteItem = function(item, response, status, headers) {
+        alert('Uploaded successfully.');
+    };
+
+    $scope.uploader.onErrorItem = function(item, response, status, headers) {
+        alert("Upload failed:\n[" + status + "] " + response);
     };
 
     $scope.deleteData = function() {

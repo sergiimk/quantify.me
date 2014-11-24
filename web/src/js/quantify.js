@@ -34,13 +34,17 @@ function Quantify($http, config)
         });
     };
 
-    this.importData = function(account_id, access_token, file) {
-        var url = config.data_base_url + '/sensors/' + account_id + '/file';
+    this.getData = function(account_id, access_token) {
+        var url = config.data_base_url + '/sensors/' + account_id;
 
-        return $http.post(url, file,
-        {
-            headers: {'Content-Type': 'multipart/form-data'},
+        return $http({
+            url: url,
+            method: 'GET',
         });
+    };
+
+    this.getImportDataURL = function(account_id, access_token) {
+        return config.data_base_url + '/sensors/' + account_id + '/file';
     };
 
     this.getExportDataURL = function(account_id, access_token) {

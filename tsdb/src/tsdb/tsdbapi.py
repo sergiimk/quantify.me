@@ -18,6 +18,16 @@ def init_db(conn):
         '(sensor_id, ts, data)')
 
 
+def set_data_json(tr, sensor_id, events):
+    for event in events:
+        ts = iso8601.to_utc_timestamp(iso8601.parse(event['t']))
+        data = json.dumps(event)
+
+        tr.execute(
+            'INSERT INTO events (sensor_id, ts, data) '
+            'VALUES(?, ?, ?)', (sensor_id, ts, data))
+
+
 @app.route('/sensors/<int:sensor_id>', methods=['GET'])
 @cross_origin(headers='Content-Type', methods=['HEAD', 'GET', 'PUT', 'POST', 'DELETE'])
 def get_data(sensor_id):
@@ -33,6 +43,19 @@ def get_data(sensor_id):
                         mimetype='application/json')
 
 
+@app.route('/sensors/<int:sensor_id>', methods=['PUT', 'POST'])
+@cross_origin(headers='Content-Type', methods=['HEAD', 'GET', 'PUT', 'POST', 'DELETE'])
+def set_data(sensor_id):
+    with db.connection as tr:
+        if request.method == 'PUT':
+            tr.execute('DELETE FROM events '
+                       'WHERE sensor_id=?', (sensor_id,))
+
+        set_data_json(tr, sensor_id, request.json)
+
+        return Response(status=http.client.CREATED)
+
+
 @app.route('/sensors/<int:sensor_id>/file', methods=['GET'])
 @cross_origin(headers='Content-Type')
 def get_data_file(sensor_id):
@@ -42,29 +65,17 @@ def get_data_file(sensor_id):
     return response
 
 
-@app.route('/sensors/<int:sensor_id>', methods=['PUT', 'POST'])
-@cross_origin(headers='Content-Type', methods=['HEAD', 'GET', 'PUT', 'POST', 'DELETE'])
-def set_data(sensor_id):
-    with db.connection as tr:
-        if request.method == 'PUT':
-            tr.execute('DELETE FROM events '
-                       'WHERE sensor_id=?', (sensor_id,))
-
-        for event in request.json:
-            ts = iso8601.to_utc_timestamp(iso8601.parse(event['t']))
-            data = json.dumps(event)
-
-            tr.execute(
-                'INSERT INTO events (sensor_id, ts, data) '
-                'VALUES(?, ?, ?)', (sensor_id, ts, data))
-
-        return Response(status=http.client.CREATED)
-
-
 @app.route('/sensors/<int:sensor_id>/file', methods=['POST'])
 @cross_origin(headers='Content-Type')
 def set_data_file(sensor_id):
-    print(request.files)
+    with db.connection as tr:
+        tr.execute('DELETE FROM events '
+                   'WHERE sensor_id=?', (sensor_id,))
+
+        for f in request.files.values():
+            events = json.load(f)
+            set_data_json(tr, sensor_id, events)
+
     return Response(status=http.client.CREATED)
 
 
