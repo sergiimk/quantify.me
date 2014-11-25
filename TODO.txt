@@ -1,3 +1,5 @@
+Reload python code in dev docker
+Port tsdb DB handling
 Port location view
 
 Implement web API layer
@@ -10,3 +12,4 @@ Deploy to AWS
 Get domain
 
 CSRF tokens?
+Event-Time-Format header handling

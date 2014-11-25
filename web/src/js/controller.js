@@ -2,7 +2,8 @@ angular.module('app', [
     'ngRoute',
     'ui.bootstrap',
     'hljs',
-    'angularFileUpload'
+    'angularFileUpload',
+    'googlechart',
 ])
 
 ///////////////////////////////////////////////////////////
@@ -115,25 +116,6 @@ angular.module('app', [
 })
 
 ///////////////////////////////////////////////////////////
-// Dashboard
-///////////////////////////////////////////////////////////
-
-.controller('dashboardController', function($scope, $location, state, quantify) {
-    $scope.data = null;
-
-    $scope.getData = function() {
-        quantify.getData(
-            state.account_id,
-            state.access_token
-        ).success(function (data, status, headers, config) {
-            $scope.data = JSON.stringify(data, null, 2);
-        }).error(function (data, status, headers, config) {
-            alert("Failed to load sensor data:\n[" + status + "] " + data);
-        });
-    };
-})
-
-///////////////////////////////////////////////////////////
 // Account
 ///////////////////////////////////////////////////////////
 
@@ -162,6 +144,182 @@ angular.module('app', [
             alert("Failed to delete data:\n[" + status + "] " + data);
         });
     }
+})
+
+///////////////////////////////////////////////////////////
+// Dashboard
+///////////////////////////////////////////////////////////
+
+.controller('dashboardController', function($scope, $location, state, quantify) {
+    $scope.data = null;
+    $scope.data_str = null;
+
+    $scope.getData = function() {
+        console.info("Loading sensor data");
+
+        quantify.getData(
+            state.account_id,
+            state.access_token
+        ).success(function (data, status, headers, config) {
+            $scope.data = data;
+            $scope.data_str = JSON.stringify($scope.data, null, 2);
+        }).error(function (data, status, headers, config) {
+            alert("Failed to load sensor data:\n[" + status + "] " + data);
+        });
+    };
+})
+
+///////////////////////////////////////////////////////////
+// Location
+///////////////////////////////////////////////////////////
+
+.controller('locationController', function($scope, $location, state, quantify) {
+    $scope.stayPerCity = null;
+    $scope.stayPerCountry = null;
+
+    $scope.cityChart =
+    {
+        type: "GeoChart",
+        displayed: true,
+        options: {
+            width: 800,
+            displayMode: 'markers',
+            colorAxis: {colors: ['#bbbbff', '#0000ff']}
+        },
+        data: [ ['City', 'Stay'] ]
+    };
+
+    $scope.countryChart =
+    {
+        type: "GeoChart",
+        displayed: true,
+        options: {
+            width: 800,
+            displayMode: 'regions',
+            colorAxis: {colors: ['#bbbbff', '#0000ff']}
+        },
+        data: [ ['Country', 'Stay'] ]
+    };
+
+    function calculateDuration(events) {
+        var ret = [];
+        for(var i = 0; i != events.length; ++i) {
+            ret[i] = {duration: 0}
+            for(var x in events[i])
+                ret[i][x] = events[i][x]
+        }
+
+        for(var i = 1; i != events.length; ++i)
+            ret[i - 1].duration =
+                parseInt(events[i].ts) - parseInt(events[i - 1].ts);
+
+        ret[ret.length - 1].duration =
+            Math.floor(Date.now() / 1000) - parseInt(ret[i - 1].ts);
+
+        return ret;
+    };
+
+    function aggregate(data, key_prop, value_prop) {
+        var map = {};
+        for(var i = 0; i != data.length; ++i) {
+            var el = data[i];
+            var key = el[key_prop];
+            var value = el[value_prop];
+
+            if(!map.hasOwnProperty(key))
+                map[key] = value;
+            else
+                map[key] += value;
+        }
+
+        return map;
+    }
+
+    function logarithmicScale(map) {
+        var ret = {};
+
+        for(var key in map) {
+            if(!map.hasOwnProperty(key))
+                continue;
+
+            var val = map[key] / 3600 / 24;
+            ret[key] = !val ? 0 : Math.log(val);
+        }
+
+        return ret;
+    }
+
+    function getCityChartData(events) {
+        var data = []
+        if(events != null) {
+            data = logarithmicScale(
+                aggregate(
+                    calculateDuration(events),
+                    'city',
+                    'duration'
+                )
+            );
+        }
+
+        var ret = []
+        for(var key in data)
+            ret.push([key, data[key]]);
+        return ret;
+    };
+
+    function getCountryChartData(events) {
+        var data = []
+        if(events != null)
+            data = logarithmicScale(
+                aggregate(
+                    calculateDuration(events),
+                    'country',
+                    'duration'
+                )
+            );
+
+        var ret = []
+        for(var key in data)
+            ret.push([key, data[key]]);
+        return ret;
+    };
+
+    // data -> stayPerCity, stayPerCountry
+    $scope.$watch('data', function(events) {
+        $scope.stayPerCity = events == null
+            ? null
+            : aggregate(
+                calculateDuration(events),
+                'city', 'duration');
+
+        $scope.stayPerCountry = events == null
+            ? null
+            : aggregate(
+                calculateDuration(events),
+                'country', 'duration');
+    });
+
+    // stayPerCity -> cityChart.data
+    $scope.$watch('stayPerCity', function(stayPerCity) {
+        var logscale = logarithmicScale(stayPerCity);
+        var val = [ ['City', 'Stay'] ];
+
+        for(var key in logscale)
+            val.push([key, logscale[key]]);
+
+        $scope.cityChart.data = val;
+    });
+
+    // stayPerCity -> countryChart
+    $scope.$watch('stayPerCountry', function(stayPerCountry) {
+        var logscale = logarithmicScale(stayPerCountry);
+        var val = [ ['Country', 'Stay'] ];
+
+        for(var key in logscale)
+            val.push([key, logscale[key]]);
+
+        $scope.countryChart.data = val;
+    });
 })
 
 

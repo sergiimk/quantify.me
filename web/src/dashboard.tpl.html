@@ -1,7 +1,45 @@
-<div class="container-fluid">
+<div ng-controller="dashboardController" ng-init="getData()" class="container-fluid">
     <a type="button" class="btn btn-default" href="#/import-export">Import/Export</a>
-    <div ng-controller="dashboardController" ng-init="getData()">
     <h3>Dashboard</h3>
-        <div hljs source="data" language="json"></div>
+    <div ng-controller="locationController">
+        <accordion close-others="false">
+            <accordion-group heading="City stay chart">
+                <div google-chart chart="cityChart"></div>
+            </accordion-group>
+
+            <accordion-group heading="City stay data">
+                <table class="table table-condensed table-striped">
+                    <tr>
+                        <th>City</th>
+                        <th>Stay duration</th>
+                    </tr>
+                    <tr ng-repeat="(city, stay) in stayPerCity">
+                        <td>{{city}}</td>
+                        <td>{{stay / 3600 / 24}} days</td>
+                    </tr>
+                </table>
+            </accordion-group>
+
+            <accordion-group heading="Country stay chart">
+                <div google-chart chart="countryChart"></div>
+            </accordion-group>
+
+            <accordion-group heading="Country stay data">
+                <table class="table table-condensed table-striped">
+                    <tr>
+                        <th>City</th>
+                        <th>Stay duration</th>
+                    </tr>
+                    <tr ng-repeat="(country, stay) in stayPerCountry">
+                        <td>{{country}}</td>
+                        <td>{{stay / 3600 / 24}} days</td>
+                    </tr>
+                </table>
+            </accordion-group>
+
+            <accordion-group heading="Raw data">
+                <div hljs source="data_str" language="json"></div>
+            </accordion-group>
+        </accordion>
     </div>
 </div>

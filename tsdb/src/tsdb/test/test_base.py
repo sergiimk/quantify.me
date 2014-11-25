@@ -1,21 +1,19 @@
 import unittest
-import sqlite3
 from utils.test_client import TestClient
-from tsdb import tsdbapi
+from tsdb.tsdbapi import app
+from tsdb.models import db
 
 
 class TsdbApiTestCase(unittest.TestCase):
 
     def setUp(self):
-        cs = 'file:db?mode=memory&cache=shared'
-        self._db = sqlite3.connect(cs)
-        tsdbapi.init_db(self._db)
+        app.config['TESTING'] = True
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://'
+        app.config['SQLALCHEMY_ECHO'] = True
 
-        tsdbapi.app.config['DATABASE'] = cs
-        tsdbapi.app.config['TESTING'] = True
+        db.init_app(app)
+        db.app = app
+        db.create_all()
 
-        tsdbapi.app.test_client_class = TestClient
-        self.client = tsdbapi.app.test_client()
-
-    def tearDown(self):
-        self._db.close()
+        app.test_client_class = TestClient
+        self.client = app.test_client()

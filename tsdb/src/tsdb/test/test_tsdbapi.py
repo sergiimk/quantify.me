@@ -5,12 +5,12 @@ from utils import iso8601
 
 class TestTSDB(TsdbApiTestCase):
 
-    def test_get_empty(self):
+    def test_get_data_empty(self):
         resp = self.client.get('/sensors/1')
         self.assertEqual(resp.status_code, http.client.OK)
         self.assertEqual(resp.json, [])
 
-    def test_get_data_file(self):
+    def test_get_data_file_empty(self):
         resp = self.client.get('/sensors/1/file')
         self.assertEqual(resp.status_code, http.client.OK)
         self.assertIn('Content-Disposition', resp.headers)
@@ -63,3 +63,25 @@ class TestTSDB(TsdbApiTestCase):
 
         resp = self.client.get('/sensors/1')
         self.assertEqual(resp.json, [])
+
+    def test_get_data_time_fmt(self):
+        now = iso8601.utcnow()
+        ts = str(iso8601.to_utc_timestamp(now))
+        t = iso8601.format(now)
+
+        event = {'t': t, 'location': 'loc1'}
+        resp = self.client.put('/sensors/1', data=[event])
+        self.assertEqual(resp.status_code, http.client.CREATED)
+
+        resp = self.client.get('/sensors/1')
+        self.assertEqual(resp.json, [{'t': t, 'location': 'loc1'}])
+
+        resp = self.client.get('/sensors/1', headers={
+            'Event-Time-Format': 'unix'
+        })
+        self.assertEqual(resp.json, [{'ts': ts, 'location': 'loc1'}])
+
+        resp = self.client.get('/sensors/1', headers={
+            'Event-Time-Format': 'unix,iso8601'
+        })
+        self.assertEqual(resp.json, [{'t': t, 'ts': ts, 'location': 'loc1'}])

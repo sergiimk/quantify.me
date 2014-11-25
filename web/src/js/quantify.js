@@ -13,7 +13,10 @@ function Quantify($http, config)
             url: url,
             method: 'POST',
             data: JSON.stringify(request),
-            headers: {'Content-Type': 'application/json'},
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
         });
     };
 
@@ -30,7 +33,10 @@ function Quantify($http, config)
             url: url,
             method: 'POST',
             data: JSON.stringify(request),
-            headers: {'Content-Type': 'application/json'},
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
         });
     };
 
@@ -40,6 +46,10 @@ function Quantify($http, config)
         return $http({
             url: url,
             method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Event-Time-Format': 'iso8601,unix',
+            },
         });
     };
 
