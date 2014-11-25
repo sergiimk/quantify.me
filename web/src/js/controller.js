@@ -1,4 +1,9 @@
-angular.module('app', ['ngRoute', 'ui.bootstrap', 'angularFileUpload'])
+angular.module('app', [
+    'ngRoute',
+    'ui.bootstrap',
+    'hljs',
+    'angularFileUpload'
+])
 
 ///////////////////////////////////////////////////////////
 // Config
@@ -36,6 +41,22 @@ angular.module('app', ['ngRoute', 'ui.bootstrap', 'angularFileUpload'])
 })
 
 ///////////////////////////////////////////////////////////
+// Navigation
+///////////////////////////////////////////////////////////
+
+.controller('navController', function($scope, $location, state, quantify) {
+    if(state.access_token == null) {
+        $location.path('/login');
+    }
+
+    $scope.logout = function() {
+        state.account_id = null;
+        state.access_token = null;
+        $location.path('/login');
+    }
+})
+
+///////////////////////////////////////////////////////////
 // Login
 ///////////////////////////////////////////////////////////
 
@@ -58,7 +79,8 @@ angular.module('app', ['ngRoute', 'ui.bootstrap', 'angularFileUpload'])
             state.access_token = data.access_token;
             $location.path('/dashboard');
         }).error(function (data, status, headers, config) {
-            alert("Failed to login:\n[" + status + "] " + data);
+            console.error("Failed to login:\n[" + status + "] " + data);
+            $scope.fault = true;
         });
     };
 })
@@ -86,7 +108,8 @@ angular.module('app', ['ngRoute', 'ui.bootstrap', 'angularFileUpload'])
         ).success(function (data, status, headers, config) {
             $location.path('/new_user');
         }).error(function (data, status, headers, config) {
-            alert("Failed to create user:\n[" + status + "] " + data);
+            console.error("Failed to create user:\n[" + status + "] " + data);
+            $scope.fault = true;
         });
     };
 })
@@ -103,7 +126,7 @@ angular.module('app', ['ngRoute', 'ui.bootstrap', 'angularFileUpload'])
             state.account_id,
             state.access_token
         ).success(function (data, status, headers, config) {
-            $scope.data = data;
+            $scope.data = JSON.stringify(data, null, 2);
         }).error(function (data, status, headers, config) {
             alert("Failed to load sensor data:\n[" + status + "] " + data);
         });
@@ -121,7 +144,7 @@ angular.module('app', ['ngRoute', 'ui.bootstrap', 'angularFileUpload'])
         url: quantify.getImportDataURL(state.account_id, state.access_token),
     });
 
-    $scope.uploader.onCompleteItem = function(item, response, status, headers) {
+    $scope.uploader.onSuccessItem = function(item, response, status, headers) {
         alert('Uploaded successfully.');
     };
 

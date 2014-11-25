@@ -1,11 +1,33 @@
-<a style="float: right" href="#/register">Sign Up</a>
-
-<form ng-controller="registerController" ng-submit="register()">
-    <label for="email">Email:</label><br/>
-    <input type="text" id="email" ng-model="account.email"><br/>
-    <label for="password">Password:</label><br/>
-    <input type="password" id="password" ng-model="account.password"><br/>
-    <label for="password">Repeat password:</label><br/>
-    <input type="password" id="password2" ng-model="account.password2"><br/>
-    <button type="submit">Create Account</button><br/>
-</form>
+<div ng-controller="registerController" class="container-fluid">
+    <h4>Register Account</h4>
+    <div class="row">
+        <div class="col-xs-3">
+            <div class="well">
+                <form name="form" ng-submit="register()" novalidate>
+                    <div class="form-group">
+                        <label for="email" class="control-label">Username</label>
+                        <input id="email" type="text"
+                               ng-model="account.email" required="" placeholder="me@example.com"
+                               class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="control-label">Password</label>
+                        <input id="password" type="password"
+                               ng-model="account.password" required=""
+                               class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="password2" class="control-label">Confirm password</label>
+                        <input id="password2" type="password"
+                               ng-model="account.password2" required=""
+                               class="form-control"/>
+                    </div>
+                    <alert type="danger" ng-show="fault">Failed to register account</alert>
+                    <button type="submit"
+                            class="btn btn-info btn-block"
+                            ng-disabled="form.$invalid">Create an Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

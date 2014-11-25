@@ -1,5 +1,7 @@
-<a style="float: right" href="#/import-export">Import/Export</a>
-<div ng-controller="dashboardController" ng-init="getData()">
+<div class="container-fluid">
+    <a type="button" class="btn btn-default" href="#/import-export">Import/Export</a>
+    <div ng-controller="dashboardController" ng-init="getData()">
     <h3>Dashboard</h3>
-    <pre><code>{{data}}</code></pre>
+        <div hljs source="data" language="json"></div>
+    </div>
 </div>

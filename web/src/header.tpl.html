@@ -1,3 +1,11 @@
-<header class="navbar navbar-default">
-    <a class="navbar-brand" href="#">qantify.me</a>
-</header>
+<nav ng-controller="navController" class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <a class="navbar-brand"
+           href="#">qantify.me</a>
+
+        <button type="button"
+                class="nav navbar-right btn-link"
+                ng-click="logout()"
+                ng-show="state.account_id != null">Sign Out</button>
+    </div>
+</nav>

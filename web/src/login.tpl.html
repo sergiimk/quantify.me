@@ -1,9 +1,50 @@
-<a style="float: right" href="#/register">Sign Up</a>
-
-<form ng-controller="loginController" ng-submit="login()">
-    <label for="email">Email:</label><br/>
-    <input type="text" id="email" ng-model="credentials.email"><br/>
-    <label for="password">Password:</label><br/>
-    <input type="password" id="password" ng-model="credentials.password"><br/>
-    <button type="submit" class="btn btn-primary">Sign In</button><br/>
-</form>
+<div ng-controller="loginController" class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">Login</h4>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="well">
+                        <form ng-submit="login()" novalidate>
+                            <div class="form-group">
+                                <label for="email" class="control-label">Username</label>
+                                <input id="email" type="text"
+                                       ng-model="credentials.email" required="" placeholder="me@example.com"
+                                       class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="control-label">Password</label>
+                                <input id="password" type="password"
+                                       ng-model="credentials.password" required=""
+                                       class="form-control"/>
+                            </div>
+                            <alert type="danger" ng-show="fault">Wrong username or password</alert>
+                            <button type="submit" class="btn btn-success btn-block">Sign In</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <p class="lead">Don't have an account?</p>
+                    <p>This service is in development:</p>
+                    <ul class="list-unstyled">
+                        <li><span class="glyphicon glyphicon-remove text-danger"></span>
+                            Data can be wiped at any time
+                        </li>
+                        <li><span class="glyphicon glyphicon-remove text-danger"></span>
+                            Passwords are stored in clear text
+                        </li>
+                        <li><span class="glyphicon glyphicon-remove text-danger"></span>
+                            Authorization is not in place yet
+                        </li>
+                        <li><span class="glyphicon glyphicon-remove text-danger"></span>
+                            Use at your own risk
+                        </li>
+                    </ul>
+                    <p><a href="#/register" class="btn btn-info btn-block">Sign Up</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
