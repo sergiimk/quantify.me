@@ -1,0 +1,56 @@
+<div ng-controller="locationAddController" class="row">
+    <div class="col-xs-4">
+        <form name="add_loc_form" ng-submit="addLocation()" novalidate>
+
+            <div class="form-group">
+                <label for="date" class="control-label">Date</label>
+                <p class="input-group">
+                    <input id="date" type="text" class="form-control"
+                           ng-model="data.date" ng-required="true"
+                           datepicker-popup="yyyy-MM-dd"
+                           is-open="opened" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default"
+                                ng-click="open($event)">
+                            <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                    </span>
+                </p>
+            </div>
+
+            <div class="form-group">
+                <label for="country" class="control-label">Country</label>
+                <input id="country" type="text"
+                       ng-model="data.country" ng-required="true"
+                       placeholder="Italy"
+                       class="form-control"/>
+            </div>
+
+            <div class="form-group">
+                <label for="city" class="control-label">City</label>
+                <input id="city" type="text"
+                       ng-model="data.city" ng-required="true"
+                       placeholder="Rome"
+                       class="form-control"/>
+            </div>
+
+            <div class="form-group">
+                <label for="transport" class="control-label">Type of transportation</label>
+                <input id="transport" type="text"
+                       ng-model="data.transport" ng-required="true"
+                       placeholder="Air"
+                       class="form-control"/>
+            </div>
+
+            <button type="submit"
+                    class="btn btn-success btn-block"
+                    ng-disabled="inProgress || add_loc_form.$invalid">Add</button>
+
+        </form>
+    </div>
+
+    <div class="col-xs-4" ng-show="!add_loc_form.$invalid">
+        <label class="control-label">Resulting JSON</label>
+        <div hljs source="event_str" language="json"></div>
+    </div>
+</div>

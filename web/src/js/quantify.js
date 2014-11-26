@@ -70,5 +70,17 @@ function Quantify($http, config)
         });
     };
 
+    this.addData = function(account_id, access_token, events) {
+        var url = config.data_base_url + '/sensors/' + account_id;
+        return $http({
+            url: url,
+            method: 'POST',
+            data: JSON.stringify(events),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+    }
+
     return this;
 }

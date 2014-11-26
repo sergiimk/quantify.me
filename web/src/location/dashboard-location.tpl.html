@@ -1,0 +1,49 @@
+<div ng-controller="locationController">
+    <accordion close-others="false">
+        <accordion-group heading="Charts" is-open="firstOpen">
+            <tabset>
+                <tab heading="Stay per country">
+                    <div google-chart chart="countryChart"></div>
+
+                    <hr/>
+
+                    <table class="table table-condensed table-striped">
+                        <tr>
+                            <th>Country</th>
+                            <th>Stay duration</th>
+                        </tr>
+                        <tr ng-repeat="(country, stay) in stayPerCountry">
+                            <td>{{country}}</td>
+                            <td>{{stay / 3600 / 24}} days</td>
+                        </tr>
+                    </table>
+                </tab>
+
+                <tab heading="Stay per city">
+                    <div google-chart chart="cityChart"></div>
+
+                    <hr/>
+
+                    <table class="table table-condensed table-striped">
+                        <tr>
+                            <th>City</th>
+                            <th>Stay duration</th>
+                        </tr>
+                        <tr ng-repeat="(city, stay) in stayPerCity">
+                            <td>{{city}}</td>
+                            <td>{{stay / 3600 / 24}} days</td>
+                        </tr>
+                    </table>
+                </tab>
+            </tabset>
+        </accordion-group>
+
+        <accordion-group heading="Set current location">
+            <div ng-include="'location/location-add.tpl.html'"></div>
+        </accordion-group>
+
+        <accordion-group heading="Raw data">
+            <div hljs source="data_str" language="json"></div>
+        </accordion-group>
+    </accordion>
+</div>

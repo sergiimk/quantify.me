@@ -72,6 +72,8 @@ angular.module('app', [
     };
 
     $scope.login = function() {
+        $scope.inProgress = true;
+
         quantify.loginAccount(
             $scope.credentials.email,
             $scope.credentials.password
@@ -80,6 +82,8 @@ angular.module('app', [
             state.access_token = data.access_token;
             $location.path('/dashboard');
         }).error(function (data, status, headers, config) {
+            $scope.inProgress = false;
+
             console.error("Failed to login:\n[" + status + "] " + data);
             $scope.fault = true;
         });
@@ -174,6 +178,9 @@ angular.module('app', [
 ///////////////////////////////////////////////////////////
 
 .controller('locationController', function($scope, $location, state, quantify) {
+    // TODO: remove
+    $scope.firstOpen = true;
+
     $scope.stayPerCity = null;
     $scope.stayPerCountry = null;
 
@@ -320,6 +327,59 @@ angular.module('app', [
 
         $scope.countryChart.data = val;
     });
+})
+
+///////////////////////////////////////////////////////////
+// Location Add
+///////////////////////////////////////////////////////////
+
+.controller('locationAddController', function($scope, $location, state, quantify) {
+    $scope.data = {
+        date: new Date()
+    };
+
+    $scope.event = null;
+    $scope.event_str = null;
+
+    $scope.open = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.opened = true;
+    };
+
+    $scope.addLocation = function() {
+        $scope.inProgress = true;
+        console.info("Adding event:\n" + $scope.event_str);
+
+        quantify.addData(
+            state.account_id,
+            state.access_token,
+            [$scope.event]
+        ).success(function (data, status, headers, config) {
+            $scope.inProgress = false;
+        }).error(function (data, status, headers, config) {
+            $scope.inProgress = false;
+            alert("Failed to load sensor data:\n[" + status + "] " + data);
+        });
+    };
+
+    // event -> event_str
+    $scope.$watch('data', function(data) {
+        data.date.setUTCMilliseconds(0);
+        data.date.setUTCSeconds(0);
+        data.date.setUTCMinutes(0);
+        data.date.setUTCHours(0);
+
+        $scope.event = {
+            type: 'location',
+            t: data.date.toISOString(),
+            country: data.country,
+            city: data.city,
+            transport: data.transport,
+        };
+
+        $scope.event_str = JSON.stringify($scope.event, null, 2);
+    }, true);
 })
 
 
