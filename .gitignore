@@ -1,6 +1,2 @@
 # Artifacts
-*.pyc
-*.pyo
-
-.idea
-.vagrant
+*.py[co]
