@@ -1,15 +1,13 @@
-Reload python code in dev docker
-Port tsdb DB handling
-Port location view
+deploy to GCE
+get domain name
+create influxdb and grafana container
+port tsdbapi to influxdb backend
 
-Implement web API layer
-setup project tests
+Design web API layer
 Error handling
 Request schema validation
 
 Use nginx + uWSGI in app containers
-Deploy to AWS
-Get domain
 
 CSRF tokens?
 Event-Time-Format header handling
