@@ -1,4 +1,4 @@
-FROM ubuntu:13.10
+FROM ubuntu:17.04
 
 RUN apt-get update
 RUN apt-get install -qy nginx
