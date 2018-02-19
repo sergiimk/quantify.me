@@ -3,3 +3,7 @@
 
 # Private data
 data/
+
+# Infra
+.tox/
+.pytest_cache/
