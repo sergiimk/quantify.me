@@ -1,9 +1,15 @@
 # Artifacts
 *.py[co]
 
-# Private data
-data/
 
 # Infra
 .tox/
 .pytest_cache/
+
+
+# Private data
+data/
+
+
+# Transient data
+containers/elk/data

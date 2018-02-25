@@ -1,13 +1,20 @@
 import glob
+import logging
 import elasticsearch.helpers
 
 
+logger = logging.getLogger(__package__)
+
+
 def _event_to_document(e):
-    raw = dict(e.__dict__)
-    raw['id'] = str(raw['id'])
-    raw['t'] = str(raw['t'])
-    raw['delta'] = float(raw['delta'])
-    return raw
+    try:
+        raw = dict(e.__dict__)
+        raw['id'] = str(raw['id'])
+        raw['t'] = str(raw['t'])
+        raw['delta'] = float(raw['delta'])
+        return raw
+    except:
+        logger.exception('Failed to convert event to document: {}'.format(e))
 
 
 def _index_bulk_action(index, doc):

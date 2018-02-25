@@ -5,10 +5,8 @@ from . import constants
 from . import scotia_import
 from . import scotia_categorize
 from . import elastic_export
-from quantifyme.datasources.scotiabank import (
-    credit_csv,
-    chequing_csv,
-)
+from quantifyme.datasources import manulife
+from quantifyme.datasources import scotiabank
 
 
 DATASOURCES = [{
@@ -16,7 +14,7 @@ DATASOURCES = [{
     'pattern': '~/Documents/documents/stats/account history/'
                'scotia-chequing-*.csv',
     'parser': {
-        'fun': chequing_csv.parse_csv,
+        'fun': scotiabank.chequing.parse_csv,
         'args': {'tzinfo': '-08:00'},
         'extra': {'account': constants.SCOTIA_ACCOUNT_CHQ},
     },
@@ -27,11 +25,22 @@ DATASOURCES = [{
     'pattern': '~/Documents/documents/stats/account history/'
                'scotia-credit-*.csv',
     'parser': {
-        'fun': credit_csv.parse_csv,
+        'fun': scotiabank.credit.parse_csv,
         'args': {'tzinfo': '-08:00'},
         'extra': {'account': constants.SCOTIA_ACCOUNT_CREDIT},
     },
     'out_file': 'data/scotia-credit.cjson',
+    'elastic_index': 'transaction',
+}, {
+    'name': constants.MANULIFE_ACCOUNT_RRSP,
+    'pattern': '~/Documents/documents/stats/account history/'
+               'manulife-rrsp-*.json',
+    'parser': {
+        'fun': manulife.rrsp.parse_json,
+        'args': {},
+        'extra': {'account': constants.MANULIFE_ACCOUNT_RRSP},
+    },
+    'out_file': 'data/manulife-rrsp.cjson',
     'elastic_index': 'transaction',
 }]
 

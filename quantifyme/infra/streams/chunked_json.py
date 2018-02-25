@@ -1,7 +1,8 @@
 import io
-import json
+import simplejson
 import uuid
 import arrow
+import decimal
 from quantifyme.domain.model import Event
 
 
@@ -14,14 +15,16 @@ class ChunkedJsonWriter:
         self._pretty = pretty
 
     def write(self, event):
-        js = json.dumps(
+        js = simplejson.dumps(
             event,
             default=self._encode,
+            use_decimal=True,
             sort_keys=True,
             indent=2 if self._pretty else None,
-            ensure_ascii=False,
+            allow_nan=False,
             check_circular=False,
-            allow_nan=False)
+            ensure_ascii=False,
+        )
 
         chunk = js.encode('utf8')
 
@@ -40,12 +43,12 @@ class ChunkedJsonWriter:
     def _encode(self, o):
             if isinstance(o, Event):
                 return o.__dict__
-            if isinstance(o, uuid.UUID):
-                return str(o)
-            if isinstance(o, arrow.Arrow):
+            if isinstance(o, (uuid.UUID, arrow.Arrow)):
                 return str(o)
 
-            super().default(o)
+            raise TypeError(
+                "Object of type '{}' is not JSON serializable"
+                .format(type(o).__name__))
 
 
 ###############################################################################
@@ -64,7 +67,11 @@ class ChunkedJsonReader:
         size = int(prefix)
         chunk = self._stream.read(size)
 
-        raw = json.loads(chunk.decode('utf8'))
+        raw = simplejson.loads(
+            chunk.decode('utf8'),
+            parse_float=decimal.Decimal,
+        )
+
         raw['id'] = uuid.UUID(raw['id'])
         raw['t'] = arrow.get(raw['t'])
         return Event(**raw)

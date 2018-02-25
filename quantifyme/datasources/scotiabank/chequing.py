@@ -2,6 +2,7 @@ import re
 import csv
 import uuid
 import arrow
+import decimal
 from quantifyme.domain.model import Event
 
 
@@ -22,6 +23,9 @@ def parse_row(row, tzinfo=None):
     date, delta, _, typ, desc = row
 
     t = arrow.get(date, 'M/D/YY', tzinfo=tzinfo)
+
+    delta = decimal.Decimal(delta)
+
     typ = typ.strip('" ')
     desc = desc.strip('" ')
     desc = re.sub(' +', ' ', desc)
@@ -29,7 +33,7 @@ def parse_row(row, tzinfo=None):
     # Create stable ID based on input data
     id = uuid.uuid5(
         namespace=NAMESPACE_SCOTIA_CHQ,
-        name=':'.join((t.isoformat(), delta, typ, desc))
+        name=':'.join((str(t), str(delta), typ, desc))
     )
 
     return Event(
@@ -38,21 +42,3 @@ def parse_row(row, tzinfo=None):
         delta=delta,
         desc=' '.join((typ, desc)),
     )
-
-
-if __name__ == '__main__':
-    import sys
-    import argparse
-    from quantifyme.infra.codecs.json import JsonCodec
-
-    parser = argparse.ArgumentParser(
-        description='Parses Scotia Bank chequing account history')
-    parser.add_argument('file', nargs='*', help="the source CSV file")
-    args = parser.parse_args()
-
-    codec = JsonCodec()
-
-    for filename in args.file:
-        for event in parse_csv(filename):
-            sys.stdout.write(codec.write(event).decode('utf8'))
-            sys.stdout.write(',\n')

@@ -7,6 +7,9 @@ logger = logging.getLogger(__name__)
 
 
 def is_transfer(e):
+    if not hasattr(e, 'desc'):
+        return False
+
     return ((
         e.account == constants.SCOTIA_ACCOUNT_CHQ and
         e.desc == 'Customer Transfer Dr. PC TO 4537049644328016'
@@ -17,6 +20,9 @@ def is_transfer(e):
 
 
 def is_asset(e):
+    if not hasattr(e, 'desc'):
+        return False
+
     goods_stores = ('IKEA', 'WAL-MART', 'FUTURE SHOP')
     return any(store in e.desc for store in goods_stores)
 
@@ -56,6 +62,9 @@ tag_by_desc = (
 
 
 def get_tags(e):
+    if not hasattr(e, 'desc'):
+        return None
+
     tags = set()
 
     for p, tag in tag_by_desc:

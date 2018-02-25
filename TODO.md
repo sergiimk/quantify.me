@@ -1,22 +1,21 @@
+# Data sources
+
+* Stocks
+
+
 # Import pipeline
 
-* adjust for missing data
-* use Selenium to import bank data
-* support manual tagging
-* use Decimal for fp numbers
-
-
-# Other
-
+* recover missing data
 * classification
-* grafana?
-* annotations
-* RRSP
-* Stocks
-* talk to bank re. full history
-* talk to bank re. API
+    * support manual tagging
+    * manual annotations
+* use Selenium to import bank data
 
-https://data.worldbank.org/
+
+# Storage and processing
+
+* Grafana + InfluxDB
+
 
 # Questions
 
@@ -28,3 +27,6 @@ https://data.worldbank.org/
     * utilities
     * food
     * entertainment
+
+
+https://data.worldbank.org/

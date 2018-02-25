@@ -1,15 +1,28 @@
 import uuid
 import arrow
+import decimal
 
 
 class Event:
     def __init__(self, *, id, t, **kwargs):
         assert isinstance(id, uuid.UUID)
         assert isinstance(t, arrow.Arrow)
+        assert self._validate_raw_data(kwargs)
 
         self.__dict__['id'] = id
         self.__dict__['t'] = t
         self.__dict__.update(kwargs)
+
+    def _validate_raw_data(self, value):
+        assert isinstance(value, (str, int, decimal.Decimal, list, dict))
+        if isinstance(value, list):
+            for i in value:
+                self._validate_raw_data(i)
+        elif isinstance(value, dict):
+            for k, v in value.items():
+                assert isinstance(k, str)
+                self._validate_raw_data(v)
+        return True
 
     def __setattr__(self, key, value):
         if hasattr(self, key):

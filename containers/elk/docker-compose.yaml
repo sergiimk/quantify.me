@@ -4,7 +4,8 @@ services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.2.1
     volumes:
-      - ./elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ./configs/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - ./data/elasticsearch:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
       - 9300:9300
@@ -12,7 +13,7 @@ services:
   kibana:
     image: docker.elastic.co/kibana/kibana:6.2.1
     volumes:
-      - ./kibana.yml:/usr/share/kibana/config/kibana.yml
+      - ./configs/kibana.yml:/usr/share/kibana/config/kibana.yml
     links:
       - elasticsearch
     ports:
