@@ -6,15 +6,31 @@
 #
 arrow==0.12.1
 attrs==17.4.0             # via pytest
+certifi==2018.1.18        # via requests
+chardet==3.0.4            # via requests
+click==6.7                # via geocoder
+decorator==4.2.1          # via ratelim
+docutils==0.14            # via geohash2
 elasticsearch==6.1.1
+furl==1.0.1
+future==0.16.0            # via geocoder
+geocoder==1.37.0
+geohash2==1.1
+idna==2.6                 # via requests
+influxdb==5.0.0
+iso3166==0.8
 jsonschema==2.6.0
+orderedmultidict==0.7.11  # via furl
 pluggy==0.6.0             # via pytest
 py==1.5.2                 # via pytest
 pytest==3.4.1
-python-dateutil==2.6.1    # via arrow
+python-dateutil==2.6.1    # via arrow, influxdb
+pytz==2018.3              # via influxdb
+ratelim==0.1.6            # via geocoder
+requests==2.18.4          # via geocoder, influxdb
 simplejson==3.13.2
-six==1.11.0               # via pytest, python-dateutil
-urllib3==1.22             # via elasticsearch
+six==1.11.0               # via furl, geocoder, influxdb, orderedmultidict, pytest, python-dateutil
+urllib3==1.22             # via elasticsearch, requests
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools                # via pytest

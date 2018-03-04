@@ -4,7 +4,7 @@ import simplejson
 from . import common
 
 
-NAMESPACE_MANULIFE_RRSP = uuid.UUID('520158c5-84f4-44b9-a95e-0ab9faacbf79')
+NAMESPACE_MANULIFE_TFSA = uuid.UUID('49abf6f4-75b8-4cf7-ab49-1937545a8ec5')
 
 
 def parse(stream):
@@ -17,7 +17,7 @@ def parse(stream):
         try:
             yield common.parse_obj(
                 obj,
-                id_namespace=NAMESPACE_MANULIFE_RRSP)
+                id_namespace=NAMESPACE_MANULIFE_TFSA)
         except Exception as e:
             raise Exception(
                 "Failed to parse object: {!r}".format(obj)

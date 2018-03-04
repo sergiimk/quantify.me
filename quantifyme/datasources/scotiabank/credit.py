@@ -1,3 +1,4 @@
+import io
 import re
 import csv
 import uuid
@@ -9,14 +10,14 @@ from quantifyme.domain.model import Event
 NAMESPACE_SCOTIA_CREDIT = uuid.UUID('5645fe08-85b0-426c-9982-155c00e19848')
 
 
-def parse_csv(filename, tzinfo=None):
-    with open(filename, 'r', encoding='utf8') as f:
-        reader = csv.reader(f)
-        for row in reader:
-            try:
-                yield parse_row(row, tzinfo=tzinfo)
-            except Exception as e:
-                raise Exception("Failed to parse row: {!r}".format(row)) from e
+def parse(stream, tzinfo=None):
+    stream = io.TextIOWrapper(stream, encoding='utf8')
+    reader = csv.reader(stream)
+    for row in reader:
+        try:
+            yield parse_row(row, tzinfo=tzinfo)
+        except Exception as e:
+            raise Exception("Failed to parse row: {!r}".format(row)) from e
 
 
 def parse_row(row, tzinfo=None):

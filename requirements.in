@@ -1,4 +1,11 @@
 arrow
-simplejson
+furl
 jsonschema
+simplejson
+
+iso3166
+geocoder
+geohash2
+
 elasticsearch
+influxdb
