@@ -7,5 +7,10 @@ iso3166
 geocoder
 geohash2
 
+click
+
 elasticsearch
 influxdb
+
+jupyter
+nbstripout

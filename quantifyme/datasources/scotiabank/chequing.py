@@ -23,7 +23,7 @@ def parse(stream, tzinfo=None):
 def parse_row(row, tzinfo=None):
     date, delta, _, typ, desc = row
 
-    t = arrow.get(date, 'M/D/YY', tzinfo=tzinfo)
+    t = arrow.get(date, 'M/D/YYYY', tzinfo=tzinfo)
 
     delta = decimal.Decimal(delta)
 

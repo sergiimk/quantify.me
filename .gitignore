@@ -13,3 +13,7 @@ data/
 
 # Transient data
 containers/elk/data
+
+
+# Jupyter
+.ipynb_checkpoints/
