@@ -1,107 +1,63 @@
+function chartCandlestick() {
+	function my(selection) {
+		var margin = {top: 20, right: 20, bottom: 30, left: 50};
+		var width = 960 - margin.left - margin.right;
+		var height = 500 - margin.top - margin.bottom;
 
-class CandlestickChart {
+		var xScale = techan.scale.financetime()
+			.range([0, width]);
+		var yScale = d3.scaleLinear()
+			.range([height, 0]);
 
-	constructor(svg) {
-		this.svg = svg;
+		var plot = techan.plot.candlestick()
+			.xScale(xScale)
+			.yScale(yScale);
 
-		this.margin = {top: 20, right: 20, bottom: 30, left: 50};
-		this.width = 960 - this.margin.left - this.margin.right;
-		this.height = 500 - this.margin.top - this.margin.bottom;
-
-		this.xScale = techan.scale.financetime()
-			.range([0, this.width]);
-		this.yScale = d3.scaleLinear()
-			.range([this.height, 0]);
-
-		this.plot = techan.plot.candlestick()
-			.xScale(this.xScale)
-			.yScale(this.yScale);
-
-		this.plot.accessor()
+		plot.accessor()
 			.date(d => d.date)
 			.open(d => d.open)
 			.high(d => d.high)
 			.low(d => d.low)
 			.close(d => d.close);
 
-		this.xAxis = d3.axisBottom()
-			.scale(this.xScale);
+		var xAxis = d3.axisBottom()
+			.scale(xScale);
 
-		this.yAxis = d3.axisLeft()
-			.scale(this.yScale);
-	}
+		var yAxis = d3.axisLeft()
+			.scale(yScale);
 
-	initPlot() {
-		this.svg = this.svg
-			.attr("width", this.width + this.margin.left + this.margin.right)
-			.attr("height", this.height + this.margin.top + this.margin.bottom)
+		var svg = selection
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
 			.append("g")
-			.attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-		this.svg.append("clipPath")
+		svg.append("clipPath")
 			.attr("id", "clip")
 			.append("rect")
 			.attr("x", 0)
-			.attr("y", this.yScale(1))
-			.attr("width", this.width)
-			.attr("height", this.yScale(0) - this.yScale(1));
+			.attr("y", yScale(1))
+			.attr("width", width)
+			.attr("height", yScale(0) - yScale(1));
 
-		this.svg.append("g")
+		svg.append("g")
 			.attr("class", "candlestick")
 			.attr("clip-path", "url(#clip)");
 
-		this.svg.append("g")
+		svg.append("g")
 			.attr("class", "x axis")
-			.attr("transform", "translate(0," + this.height + ")");
+			.attr("transform", "translate(0," + height + ")");
 
-		this.svg.append("g")
+		svg.append("g")
 			.attr("class", "y axis");
 
-		var self = this;
-		this.zoom = d3.zoom()
-			.on("zoom", function() { self.on_zoom(); });
+		xScale.domain(selection.datum().map(plot.accessor().d));
+		yScale.domain(techan.scale.plot.ohlc(selection.datum(), plot.accessor()).domain());
 
-		this.svg.append("rect")
-			.attr("class", "pane")
-			.attr("width", this.width)
-			.attr("height", this.height)
-			.call(this.zoom);
+		svg.select("g.candlestick").call(plot);
+		svg.selectAll("g.x.axis").call(xAxis);
+		svg.selectAll("g.y.axis").call(yAxis);
+	};
 
-		return this;
-	}
-
-	datum(data) {
-		this.xScale.domain(data.map(this.plot.accessor().d));
-		this.yScale.domain(techan.scale.plot.ohlc(data, this.plot.accessor()).domain());
-		this.svg.selectAll("g.candlestick").datum(data);
-
-		// Associate the zoom with the scale after a domain has been applied
-		// Stash initial settings to store as baseline for zooming
-		this.zoomableInit = this.xScale.zoomable().clamp(false).copy();
-
-		return this;
-	}
-
-	draw() {
-		this.svg.select("g.candlestick").call(this.plot);
-		// using refresh method is more efficient as it does not perform any data joins
-		// Use this if underlying data is not changing
-		// this.svg.select("g.candlestick").call(candlestick.refresh);
-		this.svg.selectAll("g.x.axis").call(this.xAxis);
-		this.svg.selectAll("g.y.axis").call(this.yAxis);
-
-		return this;
-	}
-
-	on_zoom() {
-		var rescaledY = d3.event.transform.rescaleY(this.yScale);
-		this.yAxis.scale(rescaledY);
-		this.plot.yScale(rescaledY);
-
-		// Emulates D3 behaviour, required for financetime due to secondary zoomable scale
-		this.xScale.zoomable().domain(
-			d3.event.transform.rescaleX(this.zoomableInit).domain());
-
-		this.draw();
-	}
+	return my;
 }

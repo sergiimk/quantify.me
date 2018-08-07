@@ -1,5 +1,4 @@
-var chart = new CandlestickChart(d3.select("#chart"))
-	.initPlot();
+var chart = chartCandlestick();
 
 d3.json("data/all_in_one.json", function(error, data) {
 	if (error) throw error;
@@ -17,20 +16,11 @@ d3.json("data/all_in_one.json", function(error, data) {
 	);
 
 	data_view_populate(data);
-	chart.datum(data);
-	chart.draw();
-});
 
-function data_view_populate(data) {
-	d3.select('#data')
-		.selectAll('div')
-		.data(data)
-		.enter()
-		.append('div')
-		.text(function(d) {
-			return JSON.stringify(d);
-		});
-}
+	d3.select("#chart")
+		.datum(data)
+		.call(chart);
+});
 
 
 var map = mapTravel();
@@ -42,3 +32,15 @@ d3.json("https://d3js.org/world-50m.v1.json", function(error, world) {
 		.datum(world)
 		.call(map);
 });
+
+
+function data_view_populate(data) {
+	d3.select('#data')
+		.selectAll('div')
+		.data(data)
+		.enter()
+		.append('div')
+		.text(function(d) {
+			return JSON.stringify(d);
+		});
+}
