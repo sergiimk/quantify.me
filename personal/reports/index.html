@@ -5,8 +5,8 @@
 
         <link rel="stylesheet" href="index.css">
 
-        <script src="https://d3js.org/d3.v4.min.js"></script>
-
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
         <script src="http://techanjs.org/techan.min.js"></script>
 
         <script src="https://d3js.org/d3-geo-projection.v1.min.js"></script>
@@ -15,16 +15,17 @@
     <body>
         <h1>Reports</h1>
 
-        <h3>Chart</h3>
-        <svg id="chart"></svg>
+        <h3>Liquid Assets</h3>
+        <div id="assets-stacked"></div>
+
+        <h3>Candlestick (CHQ)</h3>
+        <svg id="candlestick"></svg>
 
         <h3>Travel</h3>
         <svg id="map" width="960" height="547"></svg>
 
-        <h3>Data</h3>
-        <div id="data"></div>
-
         <script src="js/data_transforms.js"></script>
+        <script src="js/chart_assets.js"></script>
         <script src="js/candlestick.js"></script>
         <script src="js/travelmap.js"></script>
         <script src="js/index.js"></script>

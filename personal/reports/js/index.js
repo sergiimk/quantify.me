@@ -1,46 +1,33 @@
 var chart = chartCandlestick();
+var g_chartAssetsStacked = chartAssets();
 
-d3.json("data/all_in_one.json", function(error, data) {
-	if (error) throw error;
 
-	chq = data['Scotiabank - Chequing'];
-
-	chq.map(function(e) {
-		e.t = d3.isoParse(e.t);
-		return e;
+d3.json("data/all_in_one.json").then(function(data) {
+	data.forEach(g => {
+		g.events.forEach(e => { e.t = d3.isoParse(e.t); });
 	});
 
-	data = aggregate_candlestick(
-		chq,
-		(t) => new Date(Date.UTC(t.getFullYear(), t.getMonth(), 1))
-	);
 
-	data_view_populate(data);
-
-	d3.select("#chart")
-		.datum(data)
+	d3.select("#candlestick")
+		.datum(
+			aggregate_candlestick(
+				data.find(g => g.name == 'Scotiabank - Chequing').events,
+				(t) => new Date(Date.UTC(t.getFullYear(), t.getMonth(), 1))))
 		.call(chart);
+
+	d3.select('#assets-stacked')
+		.datum(data.filter(g => g.name != 'Location'))
+		.call(g_chartAssetsStacked);
 });
+
+
+
 
 
 var map = mapTravel();
 
-d3.json("https://d3js.org/world-50m.v1.json", function(error, world) {
-	if (error) throw error;
-
+d3.json("https://d3js.org/world-50m.v1.json").then(function(world) {
 	d3.select('#map')
 		.datum(world)
 		.call(map);
 });
-
-
-function data_view_populate(data) {
-	d3.select('#data')
-		.selectAll('div')
-		.data(data)
-		.enter()
-		.append('div')
-		.text(function(d) {
-			return JSON.stringify(d);
-		});
-}
