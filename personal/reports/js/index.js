@@ -2,6 +2,8 @@ var chart = new CandlestickChart(d3.select("#chart"))
 	.initPlot();
 
 d3.json("data/all_in_one.json", function(error, data) {
+	if (error) throw error;
+
 	chq = data['Scotiabank - Chequing'];
 
 	chq.map(function(e) {
@@ -29,3 +31,14 @@ function data_view_populate(data) {
 			return JSON.stringify(d);
 		});
 }
+
+
+var map = mapTravel();
+
+d3.json("https://d3js.org/world-50m.v1.json", function(error, world) {
+	if (error) throw error;
+
+	d3.select('#map')
+		.datum(world)
+		.call(map);
+});
