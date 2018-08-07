@@ -1,4 +1,3 @@
-import io
 import simplejson
 import uuid
 import arrow

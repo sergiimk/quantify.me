@@ -60,3 +60,9 @@ class Event:
                 if k not in ('id', 't')
             )
         )
+
+    def to_raw(self):
+        raw = dict(self.__dict__)
+        raw['id'] = str(raw['id'])
+        raw['t'] = str(raw['t'])
+        return raw

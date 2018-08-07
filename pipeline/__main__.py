@@ -23,6 +23,8 @@ def cli():
 @cli.command()
 def ingest():
     """Import and enrich data"""
+    all_in_one = {}
+
     for src in DATASOURCES:
         logging.info(
             'Reading data for: %s', src['name'])
@@ -40,6 +42,23 @@ def ingest():
         logging.info(
             'Dumping to file: %s', src['out_file'])
         chunked_json.export(events, src['out_file'])
+
+
+        all_in_one[src['name']] = [
+            e.to_raw()
+            for e in sorted(events, key=lambda e: (e.t, e.id))
+        ]
+
+    with open('data/all_in_one.json', 'w', encoding='utf8') as f:
+        import simplejson
+        simplejson.dump(
+            all_in_one, f,
+            use_decimal=True,
+            sort_keys=True,
+            indent=2,
+            allow_nan=False,
+            check_circular=False,
+            ensure_ascii=False)
 
 
 @cli.command()

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+body {
+    font: 10px sans-serif;
+}
+
+.r {
+    fill: #00AA00;
+}
+
+.r:hover {
+    fill: #00AAAA;
+}
+
+.r.mouseover {
+    fill: #00CC00;
+}
+
+</style>
+<body>
+    <script src="http://d3js.org/d3.v4.min.js"></script>
+    <script src="http://techanjs.org/techan.min.js"></script>
+    <script>
+
+var margin = {top: 20, right: 20, bottom: 30, left: 50};
+var width = 960 - margin.left - margin.right;
+var height = 500 - margin.top - margin.bottom;
+
+var svg = d3.select("body")
+    .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+svg.append("rect")
+    .attr("class", "r")
+    .attr("x", 20)
+    .attr("y", 20)
+    .attr("width", 20)
+    .attr("height", 10);
+
+svg.append("rect")
+    .attr("class", "r")
+    .attr("x", 40)
+    .attr("y", 60)
+    .attr("width", 20)
+    .attr("height", 10);
+    //.on("mouseover", handleMouseOver)
+    //.on("mouseout", handleMouseOut);
+
+function handleMouseOver(d, i) {
+    d3.select(this)
+        .attr("class", "r mouseover");
+}
+
+function handleMouseOut(d, i) {
+    d3.select(this)
+        .attr("class", "r");
+}
+    </script>
+</body>
