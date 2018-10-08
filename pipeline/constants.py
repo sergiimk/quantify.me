@@ -6,3 +6,6 @@ MANULIFE_ACCOUNT_TFSA = 'Manulife - TFSA'
 
 SCOTIA_ACCOUNT_CHQ = 'Scotiabank - Chequing'
 SCOTIA_ACCOUNT_CREDIT = 'Scotiabank - Credit'
+SCOTIA_ACCOUNT_TRADING = 'Scotiabank - Trading'
+
+VALUABLES = 'Valuables'

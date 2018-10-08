@@ -3,6 +3,7 @@ from quantifyme.datasources import (
     location,
     manulife,
     scotiabank,
+    valuables,
 )
 
 
@@ -35,6 +36,20 @@ DATASOURCES = [{
     },
     'out_file': 'data/scotia-credit.cjson',
 }, {
+    'name': constants.SCOTIA_ACCOUNT_TRADING,
+    'type': constants.TYPE_TRANSACTION,
+    'pattern': '~/Documents/documents/stats/account history/'
+               'scotia-trading-*.csv',
+    'parser': {
+        'fun': scotiabank.trading.parse,
+        'args': {'tzinfo': '-08:00'},
+        'extra': {
+            'type': constants.TYPE_TRANSACTION,
+            'account': constants.SCOTIA_ACCOUNT_TRADING,
+        },
+    },
+    'out_file': 'data/scotia-trading.cjson',
+}, {
     'name': constants.MANULIFE_ACCOUNT_RRSP,
     'type': constants.TYPE_TRANSACTION,
     'pattern': '~/Documents/documents/stats/account history/'
@@ -62,6 +77,20 @@ DATASOURCES = [{
         },
     },
     'out_file': 'data/manulife-tfsa.cjson',
+}, {
+    'name': 'Valuables',
+    'type': constants.TYPE_TRANSACTION,
+    'pattern': '~/Documents/documents/stats/account history/'
+               'valuables.json',
+    'parser': {
+        'fun': valuables.parse,
+        'args': {},
+        'extra': {
+            'type': constants.TYPE_TRANSACTION,
+            'account': constants.VALUABLES,
+        },
+    },
+    'out_file': 'data/valuables.cjson',
 }, {
     'name': 'Location',
     'type': constants.TYPE_LOCATION,

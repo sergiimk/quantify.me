@@ -29,9 +29,10 @@ class Event:
             raise AttributeError(
                 '{} attributes can be added but not modified. '
                 'Attribute {!r} already exists with value {!r}'
-                .format(self.__class__.__name__, key, getattr(self, key))
+                    .format(self.__class__.__name__, key, getattr(self, key))
             )
 
+        self._validate_raw_data(value)
         self.__dict__[key] = value
 
     def __eq__(self, rhs):
