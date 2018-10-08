@@ -2,7 +2,7 @@ import geocoder
 import geohash2
 
 
-def add_geodata(events, cache=None):
+def add_geodata(events, cache=None, google_api_key=None):
     if cache is None:
         cache = {}
 
@@ -12,7 +12,9 @@ def add_geodata(events, cache=None):
 
         geodata = cache.get((e.country, e.city))
         if not geodata:
-            geodata = geocoder.google('{}, {}'.format(e.city, e.country))
+            geodata = geocoder.google(
+                '{}, {}'.format(e.city, e.country),
+                key=google_api_key)
             if not geodata:
                 raise Exception(
                     'Failed to lookup location data for: {}\n'

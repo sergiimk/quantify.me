@@ -21,7 +21,8 @@ def cli():
 
 
 @cli.command()
-def ingest():
+@click.option('-g', '--google-api-key', required=True)
+def ingest(google_api_key):
     """Import and enrich data"""
     all_in_one = []
 
@@ -32,7 +33,7 @@ def ingest():
 
         if src['type'] == constants.TYPE_LOCATION:
             logging.info('Geo-tagging events')
-            geodata.add_geodata(events)
+            geodata.add_geodata(events, google_api_key=google_api_key)
 
         if src['type'] == constants.TYPE_TRANSACTION:
             logging.info(
