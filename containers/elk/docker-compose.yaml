@@ -2,7 +2,7 @@ version: '3'
 services:
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.2.1
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.4.1
     volumes:
       - ./configs/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
       - ./data/elasticsearch:/usr/share/elasticsearch/data
@@ -11,7 +11,7 @@ services:
       - 9300:9300
 
   kibana:
-    image: docker.elastic.co/kibana/kibana:6.2.1
+    image: docker.elastic.co/kibana/kibana:6.4.1
     volumes:
       - ./configs/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
     links:

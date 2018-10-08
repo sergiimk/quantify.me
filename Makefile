@@ -19,6 +19,15 @@ ingest:
 	tox -e test-py36 -- python -m pipeline ingest
 
 
+.PHONY: elk
+elk:
+	cd containers/elk && docker-compose up
+
+
+.PHONY: export
+	tox -e test-py36 -- python -m pipeline export
+
+
 .PHONY: notebook
 notebook:
 	tox -e test-py36 -- jupyter notebook --notebook-dir=notebooks

@@ -67,24 +67,20 @@ def ingest(google_api_key):
 @cli.command()
 def export():
     """Export data to external tools"""
+    from .exporters import elasticsearch
+    elastic_exporter = elasticsearch.ElasticSearchExporter()
+
+    for typ in {s['type'] for s in DATASOURCES}:
+        logging.info('Recreating index: %s', typ)
+        elastic_exporter.recreate_index(typ)
+
     for src in DATASOURCES:
         logging.info('Reading source: %s', src['name'])
 
         with open(src['out_file'], 'rb') as f:
-            for e in ChunkedJsonReader(f):
-                print(e)
-
-    #from .exporters import (
-    #elasticsearch,
-    #influxdb,
-    #)
-    #elastic_exporter = elasticsearch.ElasticSearchExporter()
-    #for type in {s['type'] for s in DATASOURCES}:
-    #    elastic_exporter.recreate_index(type)
-    # ...
-    #logging.info('Exporting to ElasticSearch: {}'.format(src['type']))
-    #elastic_exporter.export(events, src['type'])
-    raise NotImplementedError()
+            reader = ChunkedJsonReader(f)
+            logging.info('Exporting to ElasticSearch: {}'.format(src['name']))
+            elastic_exporter.export(reader, src['type'])
 
 
 if __name__ == '__main__':
