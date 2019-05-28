@@ -13,7 +13,6 @@ class ElasticSearchExporter:
         'mappings': {
             '_doc': {
                 'properties': {
-                    't': {'type': 'date'},
                     'delta': {'type': 'double'},
                     'geohash': {'type': 'geo_point'},
                 }
@@ -56,7 +55,9 @@ class ElasticSearchExporter:
 
     def _event_to_document(self, e):
         try:
-            return self._to_raw(e.__dict__)
+            raw = self._to_raw(e.__dict__)
+            raw['@timestamp'] = raw.pop('t')
+            return raw
         except Exception:
             logger.exception('Failed to convert event to document: {}'.format(e))
             raise
